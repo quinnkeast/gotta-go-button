@@ -57,7 +57,7 @@ class Button {
     this.active = true;
     
     console.log('Big ass button gonna blink now');
-    ledGpio.writeSync(1);
+    this.ledGpio.writeSync(1);
     let count = 0;
     this.blinkInterval = setInterval(function() {
       if (count <= this.activePeriodSecs) {
