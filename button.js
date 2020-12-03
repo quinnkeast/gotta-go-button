@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const twilio = require("twilio");
 
 const {
