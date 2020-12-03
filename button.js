@@ -6,7 +6,7 @@ class Button {
     this.activePeriodSecs = activePeriodSecs;
     this.active = false;
     this.blinkInterval;
-    this.setTimer();
+    //this.setTimer();
     
     this.pushGpio.watch(function (err, state) {
       if (err) throw err;
