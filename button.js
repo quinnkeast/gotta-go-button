@@ -12,14 +12,16 @@ const {
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
-const sendMessage = client.messages
-  .create({
-    from: FROM_PHONE_NUMBER,
-    to: TO_PHONE_NUMBER,
-    body: 'Gotta 💩',
-  })
-  .then(message => console.log(message))
-  .catch(err => console.error(err));
+const sendMessage = () => {
+  client.messages
+    .create({
+      from: FROM_PHONE_NUMBER,
+      to: TO_PHONE_NUMBER,
+      body: 'Gotta 💩',
+    })
+    .then(message => console.log(message))
+    .catch(err => console.error(err));
+}
   
 class Button {
   constructor(activePeriodSecs, ledGpio, pushGpio) {
@@ -39,6 +41,7 @@ class Button {
       }
       
       console.log('Big ass button pressed!!');
+      sendMessage();
       this.startBlink();
     }.bind(this));
   }
@@ -52,7 +55,7 @@ class Button {
   
   startBlink() {
     this.active = true;
-    sendMessage();
+    
     console.log('Big ass button gonna blink now');
     buttonLedGpio.writeSync(1);
     let count = 0;
