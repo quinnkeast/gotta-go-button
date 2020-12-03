@@ -4,8 +4,8 @@ const Button = require("./button.js");
 
 dotenv.config();
 
-const buttonPushGpio = new GPIO(3, "in", "falling");
-const buttonLedGpio = new GPIO(2, "out");
+const buttonPushGpio = new GPIO(3, "in", "falling", {debounceTimeout: 10});
+const buttonLedGpio = new GPIO(4, "out");
 
 const button = new Button(5, 5, buttonLedGpio, buttonPushGpio);
 
