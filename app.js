@@ -16,6 +16,5 @@ function exit() {
 }
 
 console.log("Big ass button is on!");
-ledGpio.writeSync(1);
 
 process.on("SIGINT", exit);
