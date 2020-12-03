@@ -7,6 +7,7 @@ const buttonPushGpio = new GPIO(3, "in", "falling", {debounceTimeout: 10});
 const buttonLedGpio = new GPIO(4, "out");
 
 let active = false;
+let blinkInterval;
 
 function startBlink() {
   active = true;
@@ -14,16 +15,21 @@ function startBlink() {
   
   let count = 0;
   
-  while (count <= 5) {
-    buttonLedGpio.writeSync(count % 2);
-    count++;
-  } 
+  blinkInterval = setInterval(() => {
+    if (count <= 5) {
+      buttonLedGpio.writeSync(count % 2);
+      count++;  
+    } else {
+      reset();
+    }
+  }, 1000);
   
-  this.reset();
+  reset();
 }
 
 function reset() {
   let active = false;
+  clearInterval(blinkInterval);
 }
 
 function exit() {
