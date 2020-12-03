@@ -1,0 +1,17 @@
+{
+  "name": "gotta-go-button",
+  "version": "1.0.0",
+  "description": "A big button for the dog to push when it's gotta 💩",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Quinn Keast",
+  "license": "ISC",
+  "dependencies": {
+    "debounce": "^1.2.0",
+    "dotenv": "^8.2.0",
+    "onoff": "^6.0.1",
+    "twilio": "^3.53.0"
+  }
+}
