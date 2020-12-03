@@ -17,9 +17,11 @@ function startBlink() {
   
   blinkInterval = setInterval(() => {
     if (count <= 5) {
+      console.log(`count: ${count}`);
       buttonLedGpio.writeSync(count % 2);
       count++;  
     } else {
+      console.log('all done!');
       reset();
     }
   }, 1000);
