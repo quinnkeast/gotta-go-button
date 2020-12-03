@@ -19,7 +19,7 @@ const sendMessage = () => {
       to: TO_PHONE_NUMBER,
       body: 'Gotta 💩',
     })
-    .then(message => console.log(message))
+    .then(message => console.log(message.sid))
     .catch(err => console.error(err));
 }
   
