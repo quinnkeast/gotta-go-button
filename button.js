@@ -1,3 +1,4 @@
+const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -8,6 +9,7 @@ const {
   AUTH_TOKEN,
   FROM_PHONE_NUMBER,
   TO_PHONE_NUMBER,
+  IFTTT_KEY,
 } = process.env;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
@@ -22,7 +24,16 @@ const sendMessage = () => {
     .then(message => console.log(message.sid))
     .catch(err => console.error(err));
 }
-  
+
+const triggerHue = async () => {
+  try {
+    const res = await axios.post(`https://maker.ifttt.com/trigger/button_pressed/with/key/${IFTTT_KEY}`);
+    console.log(`Status: ${res.status}`);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 class Button {
   constructor(activePeriodSecs, ledGpio, pushGpio) {
     this.ledGpio = ledGpio;
@@ -42,6 +53,7 @@ class Button {
       
       console.log('Big ass button pressed!!');
       sendMessage();
+      triggerHue();
       this.startBlink();
     }.bind(this));
   }
