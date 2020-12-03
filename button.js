@@ -8,17 +8,18 @@ const {
   ACCOUNT_SID,
   AUTH_TOKEN,
   FROM_PHONE_NUMBER,
-  TO_PHONE_NUMBER,
+  Q_PHONE_NUMBER,
+  J_PHONE_NUMBER,
   IFTTT_KEY,
 } = process.env;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
-const sendMessage = () => {
+const sendMessage = (person) => {
   client.messages
     .create({
       from: FROM_PHONE_NUMBER,
-      to: TO_PHONE_NUMBER,
+      to: person,
       body: 'Gotta 💩',
     })
     .then(message => console.log(message.sid))
@@ -52,7 +53,8 @@ class Button {
       }
       
       console.log('Big ass button pressed!!');
-      sendMessage();
+      sendMessage(Q_PHONE_NUMBER);
+      sendMessage(J_PHONE_NUMBER);
       triggerHue();
       this.startBlink();
     }.bind(this));
