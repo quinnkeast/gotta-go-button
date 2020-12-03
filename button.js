@@ -32,9 +32,8 @@ class Button {
     while (count <= 5) {
       this.ledGpio.writeSync(count % 2);
       count++;
-    } else {
-      this.reset();
-    }
+    } 
+    this.reset();
   }
 }
 
