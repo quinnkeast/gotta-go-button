@@ -1,38 +1,12 @@
 const dotenv = require("dotenv");
 const GPIO = require("onoff").Gpio;
+const Button = require("./button.js");
 
 dotenv.config();
 
 const buttonPushGpio = new GPIO(3, "in", "falling", {debounceTimeout: 10});
 const buttonLedGpio = new GPIO(4, "out");
-
-let active = false;
-let blinkInterval;
-
-function startBlink() {
-  active = true;
-  console.log('Big ass button gonna blink now');
-  
-  let count = 0;
-  
-  blinkInterval = setInterval(() => {
-    if (count <= 5) {
-      console.log(`count: ${count}`);
-      buttonLedGpio.writeSync(count % 2);
-      count++;  
-    } else {
-      console.log('all done!');
-      reset();
-    }
-  }, 1000);
-  
-  reset();
-}
-
-function reset() {
-  let active = false;
-  clearInterval(blinkInterval);
-}
+const button = new Button(5, buttonLedGpio, buttonPushGpio);
 
 function exit() {
   buttonLedGpio.unexport();
@@ -40,14 +14,7 @@ function exit() {
   process.exit();
 }
 
-buttonPushGpio.watch((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('Big ass button pressed!!');
-  startBlink();
-});
-
 console.log("Big ass button is on!");
+buttonLedGpio.writeSync(1);
 
 process.on("SIGINT", exit);
