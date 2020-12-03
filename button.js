@@ -39,7 +39,6 @@ class Button {
       }
       
       console.log('Big ass button pressed!!');
-      sendMessage();
       this.startBlink();
     }.bind(this));
   }
@@ -53,6 +52,7 @@ class Button {
   
   startBlink() {
     this.active = true;
+    sendMessage();
     console.log('Big ass button gonna blink now');
     buttonLedGpio.writeSync(1);
     let count = 0;
