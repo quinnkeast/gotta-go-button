@@ -25,7 +25,7 @@ class Button {
     clearInterval(this.blinkInterval);
     this.active = false;
     console.log('Big ass button is done now.');
-    this.ledGpio.writeSync(0);
+    this.ledGpio.writeSync(1);
   }
   
   startBlink() {
