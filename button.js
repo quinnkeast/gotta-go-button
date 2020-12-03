@@ -26,14 +26,14 @@ class Button {
   resetTimer() {
     clearInterval(this.blinkInterval);
     this.active = false;
-    console.log('Big ass button is not active!');
+    console.log('Big ass button is done now.');
     this.ledGpio.writeSync(0);
     this.setTimer();
   }
   
   startBlink() {
     this.active = true;
-    console.log('Big ass button is active!');
+    console.log('Big ass button was activated!');
     let count = 0;
     this.blinkInterval = setInterval(function() {
       if (count <= this.activePeriodSecs) {
