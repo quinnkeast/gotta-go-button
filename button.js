@@ -6,7 +6,7 @@ class Button {
     this.active = false;
     this.blinkInterval;
     
-    this.pushGpio.watch((err) => {
+    this.pushGpio.watch(function(err) {
       if (err) {
         throw err;
       }
