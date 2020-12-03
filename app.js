@@ -6,18 +6,28 @@ dotenv.config();
 
 // Turn on the button LED when the app is running
 const ledGpio = new GPIO(21, "out");
-const buttonPushGpio = new GPIO(2, "in", "falling");
-const buttonLedGpio = new GPIO(4, "out");
+const button = new GPIO(3, "in", "falling");
 
-const button = new Button(30, 10, buttonLedGpio, buttonPushGpio);
+button.watch((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log('Big ass button pushed!');
+});
+
+//const buttonPushGpio = new GPIO(2, "in", "falling");
+//const buttonLedGpio = new GPIO(4, "out");
+
+//const button = new Button(3, 10, buttonLedGpio, buttonPushGpio);
 
 function exit() {
   // Turn off the button LED when the app exits
   ledGpio.writeSync(0);
   ledGpio.unexport();
-  buttonLedGpio.writeSync(0);
-  buttonLedGpio.unexport();
-  buttonPushGpio.unexport();
+  button.unexport();
+  //buttonLedGpio.writeSync(0);
+  //buttonLedGpio.unexport();
+  //buttonPushGpio.unexport();
   process.exit();
 }
 
