@@ -31,7 +31,7 @@ function exit() {
   process.exit();
 }
 
-console.log("Big ass button is on!");
+console.log("Big ass button is on again!");
 ledGpio.writeSync(1);
 
 process.on("SIGINT", exit);
