@@ -2,8 +2,6 @@ class Button {
   constructor(ledGpio, pushGpio) {
     this.ledGpio = ledGpio;
     this.pushGpio = pushGpio;
-    this.activeIntervalMs = activeIntervalSecs * 1000;
-    this.activePeriodSecs = activePeriodSecs;
     this.active = false;
     
     this.pushGpio.watch(function (err, state) {
