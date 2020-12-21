@@ -1,8 +1,9 @@
 const axios = require("axios");
-const Lame = require("node-lame").Lame;
 const fs = require("fs");
+const wav = require ("wav");
 const Speaker = require("speaker");
 const dotenv = require("dotenv");
+const { PassThrough } = require("stream");
 
 dotenv.config();
 
@@ -18,12 +19,6 @@ const {
 } = process.env;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
-
-const decoder = new Lame({
-  output: "buffer",
-}).setFile('./tone.mp3');
-
-const littleSpeaker = new Speaker();
 
 class Button {
   constructor(activePeriodSecs, ledGpio, pushGpio) {
@@ -96,8 +91,17 @@ class Button {
   }
   
   playSound() {
-    console.log('playing sound');
-    decoder.pipe(littleSpeaker);
+    console.log('playing sound');   
+    const audioFile = fs.createReadStream('tone.wav');
+    const reader = new wav.Reader();
+    
+    // the "format" event gets emitted at the end of the WAVE header
+    reader.on('format', (format) => {
+      // the WAVE header is stripped from the output of the reader
+      reader.pipe(new Speaker(format));
+    });
+    
+    audioFile.pipe(reader);
   }
 }
 
