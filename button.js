@@ -18,7 +18,6 @@ const {
 } = process.env;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
-const Speaker = require('speaker');
 
 class Button {
   constructor(activePeriodSecs, ledGpio, pushGpio) {
