@@ -20,10 +20,6 @@ const {
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const decoder = new Lame({
-  channels: 2,
-  bitDepth: 16,
-  sampleRate: 44100,
-  bitRate: 128,
   output: "buffer",
 }).setFile('./tone.mp3');
 
