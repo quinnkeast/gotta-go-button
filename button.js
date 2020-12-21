@@ -38,9 +38,9 @@ class Button {
       }
       
       console.log('Big ass button pressed!!');
-      //this.sendMessage(Q_PHONE_NUMBER);
-      //this.sendMessage(J_PHONE_NUMBER);
-      //this.triggerHue();
+      this.sendMessage(Q_PHONE_NUMBER);
+      this.sendMessage(J_PHONE_NUMBER);
+      this.triggerHue();
       this.playSound();
       this.startBlink();
     }.bind(this));
