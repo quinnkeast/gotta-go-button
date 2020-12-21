@@ -1,5 +1,5 @@
 const axios = require("axios");
-const lame = require("@suldashi/lame");
+const lame = require("node-lame").Lame;
 const fs = require("fs");
 const Speaker = require("speaker");
 const dotenv = require("dotenv");
