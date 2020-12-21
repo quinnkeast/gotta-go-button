@@ -24,7 +24,7 @@ const decoder = new Lame.Decoder({
   bitDepth: 16,
   sampleRate: 44100,
   bitRate: 128,
-  mode: lame.STEREO
+  mode: Lame.STEREO
 }).setFile('./tone.mp3');
 
 const littleSpeaker = new Speaker();
