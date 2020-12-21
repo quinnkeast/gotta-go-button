@@ -1,5 +1,5 @@
 const axios = require("axios");
-const lame = require("node-lame").Lame;
+const Lame = require("node-lame").Lame;
 const fs = require("fs");
 const Speaker = require("speaker");
 const dotenv = require("dotenv");
@@ -18,6 +18,16 @@ const {
 } = process.env;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
+
+const decoder = new Lame.Decoder({
+  channels: 2,
+  bitDepth: 16,
+  sampleRate: 44100,
+  bitRate: 128,
+  mode: lame.STEREO
+}).setFile('./tone.mp3');
+
+const littleSpeaker = new Speaker();
 
 class Button {
   constructor(activePeriodSecs, ledGpio, pushGpio) {
@@ -90,11 +100,8 @@ class Button {
   }
   
   playSound() {
-    fs.createReadStream('tone.mp3')
-      .pipe(new lame.Decoder())
-      .on('format', function(format) {
-        this.pipe(new Speaker(format));
-      });
+    console.log('playing sound');
+    decoder.pipe(littleSpeaker);
   }
 }
 
