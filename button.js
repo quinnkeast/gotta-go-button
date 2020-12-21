@@ -24,7 +24,6 @@ const decoder = new Lame({
   bitDepth: 16,
   sampleRate: 44100,
   bitRate: 128,
-  mode: Lame.STEREO,
   output: "buffer",
 }).setFile('./tone.mp3');
 
