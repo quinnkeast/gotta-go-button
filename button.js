@@ -19,12 +19,13 @@ const {
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
-const decoder = new Lame.Decoder({
+const decoder = new Lame({
   channels: 2,
   bitDepth: 16,
   sampleRate: 44100,
   bitRate: 128,
-  mode: Lame.STEREO
+  mode: Lame.STEREO,
+  output: "buffer",
 }).setFile('./tone.mp3');
 
 const littleSpeaker = new Speaker();
