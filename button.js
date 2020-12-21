@@ -1,5 +1,9 @@
 const axios = require("axios");
+const lame = require("@suldashi/lame");
+const fs = require("fs");
+const Speaker = require("speaker");
 const dotenv = require("dotenv");
+
 dotenv.config();
 
 const twilio = require("twilio");
@@ -14,26 +18,7 @@ const {
 } = process.env;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
-
-const sendMessage = (person) => {
-  client.messages
-    .create({
-      from: FROM_PHONE_NUMBER,
-      to: person,
-      body: 'Gotta 💩',
-    })
-    .then(message => console.log(message.sid))
-    .catch(err => console.error(err));
-}
-
-const triggerHue = async () => {
-  try {
-    const res = await axios.post(`https://maker.ifttt.com/trigger/button_pressed/with/key/${IFTTT_KEY}`);
-    console.log(`Status: ${res.status}`);
-  } catch (err) {
-    console.error(err);
-  }
-};
+const Speaker = require('speaker');
 
 class Button {
   constructor(activePeriodSecs, ledGpio, pushGpio) {
@@ -53,9 +38,10 @@ class Button {
       }
       
       console.log('Big ass button pressed!!');
-      sendMessage(Q_PHONE_NUMBER);
-      sendMessage(J_PHONE_NUMBER);
-      triggerHue();
+      //this.sendMessage(Q_PHONE_NUMBER);
+      //this.sendMessage(J_PHONE_NUMBER);
+      //this.triggerHue();
+      this.playSound();
       this.startBlink();
     }.bind(this));
   }
@@ -82,6 +68,34 @@ class Button {
         this.reset();
       }
     }.bind(this), 1000);
+  }
+  
+  sendMessage(person) {
+    client.messages
+      .create({
+        from: FROM_PHONE_NUMBER,
+        to: person,
+        body: 'Gotta 💩',
+      })
+      .then(message => console.log(message.sid))
+      .catch(err => console.error(err));
+  }
+  
+  async triggerHue() {
+    try {
+      const res = await axios.post(`https://maker.ifttt.com/trigger/button_pressed/with/key/${IFTTT_KEY}`);
+      console.log(`Status: ${res.status}`);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  
+  playSound() {
+    fs.createReadStream('tone.mp3')
+      .pipe(new lame.Decoder())
+      .on('format', function(format) {
+        this.pipe(new Speaker(format));
+      });
   }
 }
 
