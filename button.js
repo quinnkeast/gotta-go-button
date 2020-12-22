@@ -3,7 +3,6 @@ const fs = require("fs");
 const wav = require ("wav");
 const Speaker = require("speaker");
 const dotenv = require("dotenv");
-const { PassThrough } = require("stream");
 
 dotenv.config();
 
@@ -37,7 +36,6 @@ class Button {
         return;
       }
       
-      console.log('Big ass button pressed!!');
       this.sendMessage(Q_PHONE_NUMBER);
       this.sendMessage(J_PHONE_NUMBER);
       this.triggerHue();
@@ -49,14 +47,12 @@ class Button {
   reset() {
     clearInterval(this.blinkInterval);
     this.active = false;
-    console.log('Big ass button is done now.');
     this.ledGpio.writeSync(1);
   }
   
   startBlink() {
     this.active = true;
     
-    console.log('Big ass button gonna blink now');
     this.ledGpio.writeSync(1);
     let count = 0;
     this.blinkInterval = setInterval(function() {
@@ -91,7 +87,6 @@ class Button {
   }
   
   playSound() {
-    console.log('playing sound');   
     const audioFile = fs.createReadStream('tone.wav');
     const reader = new wav.Reader();
     
