@@ -8,6 +8,9 @@ dotenv.config();
 
 const twilio = require("twilio");
 
+const soundFileName = 'tone.wav';
+const keepAliveFileName = 'keepalive.wav';
+
 const {
   ACCOUNT_SID,
   AUTH_TOKEN,
@@ -27,6 +30,12 @@ class Button {
     this.active = false;
     this.blinkInterval;
     
+    // Every 25 minutes
+    setInterval(function() {
+      console.log('keepalive');
+      this.playSound(keepAliveFileName);
+    }, 1500000);
+    
     this.pushGpio.watch(function(err) {
       if (err) {
         throw err;
@@ -39,7 +48,7 @@ class Button {
       this.sendMessage(Q_PHONE_NUMBER);
       this.sendMessage(J_PHONE_NUMBER);
       this.triggerHue();
-      this.playSound();
+      this.playSound(soundFileName);
       this.startBlink();
     }.bind(this));
   }
@@ -85,8 +94,8 @@ class Button {
     }
   }
   
-  playSound() {
-    const audioFile = fs.createReadStream('tone.wav');
+  playSound(fileName) {
+    const audioFile = fs.createReadStream(fileName);
     const reader = new wav.Reader();
     
     // the "format" event gets emitted at the end of the WAVE header
