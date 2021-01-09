@@ -36,9 +36,9 @@ class Button {
         return;
       }
       
-      this.sendMessage(Q_PHONE_NUMBER);
-      this.sendMessage(J_PHONE_NUMBER);
-      this.triggerHue();
+      //this.sendMessage(Q_PHONE_NUMBER);
+      //this.sendMessage(J_PHONE_NUMBER);
+      //this.triggerHue();
       this.playSound();
       this.startBlink();
     }.bind(this));
