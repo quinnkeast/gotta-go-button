@@ -36,9 +36,9 @@ class Button {
         return;
       }
       
-      //this.sendMessage(Q_PHONE_NUMBER);
-      //this.sendMessage(J_PHONE_NUMBER);
-      //this.triggerHue();
+      this.sendMessage(Q_PHONE_NUMBER);
+      this.sendMessage(J_PHONE_NUMBER);
+      this.triggerHue();
       this.playSound();
       this.startBlink();
     }.bind(this));
@@ -71,7 +71,7 @@ class Button {
       .create({
         from: FROM_PHONE_NUMBER,
         to: person,
-        body: 'Gotta 💩',
+        body: 'I wanna go out!',
       })
       .then(message => console.log(message.sid))
       .catch(err => console.error(err));
@@ -80,7 +80,6 @@ class Button {
   async triggerHue() {
     try {
       const res = await axios.post(`https://maker.ifttt.com/trigger/button_pressed/with/key/${IFTTT_KEY}`);
-      console.log(`Status: ${res.status}`);
     } catch (err) {
       console.error(err);
     }
@@ -89,14 +88,13 @@ class Button {
   playSound() {
     const audioFile = fs.createReadStream('tone.wav');
     const reader = new wav.Reader();
-    console.log('funciton called');
+    
     // the "format" event gets emitted at the end of the WAVE header
     reader.on('format', (format) => {
       // the WAVE header is stripped from the output of the reader
-      console.log('on');
       reader.pipe(new Speaker(format));
     });
-    console.log('audiofile');
+    
     audioFile.pipe(reader);
   }
 }
