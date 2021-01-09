@@ -89,13 +89,14 @@ class Button {
   playSound() {
     const audioFile = fs.createReadStream('tone.wav');
     const reader = new wav.Reader();
-    
+    console.log('funciton called');
     // the "format" event gets emitted at the end of the WAVE header
     reader.on('format', (format) => {
       // the WAVE header is stripped from the output of the reader
+      console.log('on');
       reader.pipe(new Speaker(format));
     });
-    
+    console.log('audiofile');
     audioFile.pipe(reader);
   }
 }
