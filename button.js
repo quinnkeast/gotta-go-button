@@ -1,15 +1,16 @@
 const axios = require("axios");
 const fs = require("fs");
 const wav = require ("wav");
-const Speaker = require("speaker");
+// const Speaker = require("speaker");
 const dotenv = require("dotenv");
+
+const player = require("play-sound")(opts = {});
 
 dotenv.config();
 
 const twilio = require("twilio");
 
-const soundFileName = 'tone.wav';
-const keepAliveFileName = 'keepalive.wav';
+const soundFileName = "tone.wav";
 
 const {
   ACCOUNT_SID,
@@ -29,12 +30,6 @@ class Button {
     this.activePeriodSecs = activePeriodSecs;
     this.active = false;
     this.blinkInterval;
-    
-    // Every 25 minutes
-    setInterval(function() {
-      console.log('keepalive');
-      this.playSound(keepAliveFileName);
-    }, 1500000);
     
     this.pushGpio.watch(function(err) {
       if (err) {
@@ -95,16 +90,9 @@ class Button {
   }
   
   playSound(fileName) {
-    const audioFile = fs.createReadStream(fileName);
-    const reader = new wav.Reader();
-    
-    // the "format" event gets emitted at the end of the WAVE header
-    reader.on('format', (format) => {
-      // the WAVE header is stripped from the output of the reader
-      reader.pipe(new Speaker(format));
+    player.play(fileName, function(err){
+      if (err) throw err;
     });
-    
-    audioFile.pipe(reader);
   }
 }
 
