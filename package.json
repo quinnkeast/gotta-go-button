@@ -9,6 +9,7 @@
   "author": "Quinn Keast",
   "license": "ISC",
   "dependencies": {
+    "aplay": "^1.2.0",
     "axios": "^0.21.0",
     "debounce": "^1.2.0",
     "dotenv": "^8.2.0",

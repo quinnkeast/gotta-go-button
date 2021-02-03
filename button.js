@@ -1,10 +1,9 @@
 const axios = require("axios");
 const fs = require("fs");
 const wav = require ("wav");
-// const Speaker = require("speaker");
 const dotenv = require("dotenv");
 
-const player = require("play-sound")(opts = {});
+var Sound = require('aplay');
 
 dotenv.config();
 
@@ -90,9 +89,7 @@ class Button {
   }
   
   playSound(fileName) {
-    player.play(fileName, function(err){
-      if (err) throw err;
-    });
+    new Sound().play(fileName);
   }
 }
 
